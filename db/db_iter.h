@@ -219,7 +219,10 @@ class DBIter final : public Iterator {
     }
   }
   void set_valid(bool v) { valid_ = v; }
-  inline const Version* version() const { return version_; }
+  Status GetColumnFamilyMetaData(ColumnFamilyMetaData* md) const override {
+    version_->GetColumnFamilyMetaData(md);
+    return Status::OK();
+  }
 
  private:
   // For all methods in this block:

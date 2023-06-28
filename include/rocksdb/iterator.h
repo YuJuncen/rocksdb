@@ -24,6 +24,7 @@
 #include "rocksdb/slice.h"
 #include "rocksdb/status.h"
 #include "rocksdb/types.h"
+#include "rocksdb/metadata.h"
 
 namespace ROCKSDB_NAMESPACE {
 
@@ -127,8 +128,8 @@ class Iterator : public Cleanable {
     return Slice();
   }
 
-  virtual const Version* version() const {
-    return nullptr;
+  virtual Status GetColumnFamilyMetaData(ColumnFamilyMetaData*) const {
+    return Status::NotSupported("the iterator doesn't support fetching involved SST files");
   }
 };
 

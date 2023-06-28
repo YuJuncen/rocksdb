@@ -99,7 +99,9 @@ class ArenaWrappedDBIter : public Iterator {
     expose_blob_index_ = expose_blob_index;
   }
 
-  const Version* version() const { return db_iter_->version(); }
+  Status GetColumnFamilyMetaData(ColumnFamilyMetaData* md) const override {
+    return db_iter_->GetColumnFamilyMetaData(md);
+  }
 
  private:
   DBIter* db_iter_ = nullptr;
