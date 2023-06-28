@@ -1716,10 +1716,13 @@ struct FlushOptions {
   // is performed by someone else (foreground call or background thread).
   // Default: false
   bool allow_write_stall;
-  // Only switch mutable memtable if its size is no smaller than this parameter.
-  // Zero is no-op.
+  // Only flush memtable if it has the expected oldest key time.
+  // This option is ignored for atomic flush. Zero means disabling the check.
   // Default: 0
-  uint64_t min_size_to_flush;
+  uint64_t expected_oldest_key_time;
+  // Abort flush if compaction is disabled via `DisableManualCompaction`.
+  // Default: false
+  bool check_if_compaction_disabled;
   // Used by RocksDB internally.
   // Default: false
   bool _write_stopped;
@@ -1727,7 +1730,8 @@ struct FlushOptions {
   FlushOptions()
       : wait(true),
         allow_write_stall(false),
-        min_size_to_flush(0),
+        expected_oldest_key_time(0),
+        check_if_compaction_disabled(false),
         _write_stopped(false) {}
 };
 
@@ -1964,5 +1968,16 @@ struct LiveFilesStorageInfoOptions {
   uint64_t wal_size_for_flush = 0;
 };
 #endif  // !ROCKSDB_LITE
+
+struct MergeInstanceOptions {
+  // Whether to merge memtable. WAL must be empty to perform a memtable merge.
+  // Either write with disableWAL=true, or flush memtables before merge.
+  bool merge_memtable = false;
+  // Whether or not writes to source DBs are still allowed after the merge.
+  // Some optimizations are possible only with this flag set to false.
+  bool allow_source_write = true;
+  // No limit if negative.
+  int max_preload_files = 16;
+};
 
 }  // namespace ROCKSDB_NAMESPACE
