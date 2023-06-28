@@ -126,6 +126,10 @@ class Iterator : public Cleanable {
     assert(false);
     return Slice();
   }
+
+  virtual const Version* version() const {
+    return nullptr;
+  }
 };
 
 // Return an empty iterator (yields nothing).
