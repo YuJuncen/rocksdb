@@ -219,6 +219,7 @@ class DBIter final : public Iterator {
     }
   }
   void set_valid(bool v) { valid_ = v; }
+  inline const Version* version() const { return version_; }
 
  private:
   // For all methods in this block:
@@ -383,6 +384,7 @@ class DBIter final : public Iterator {
   const Slice* const timestamp_lb_;
   const size_t timestamp_size_;
   std::string saved_timestamp_;
+
 };
 
 // Return a new iterator that converts internal keys (yielded by

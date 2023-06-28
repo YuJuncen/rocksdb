@@ -9,7 +9,9 @@
 
 #pragma once
 #include <stdint.h>
+
 #include <string>
+
 #include "db/db_impl/db_impl.h"
 #include "db/db_iter.h"
 #include "db/range_del_aggregator.h"
@@ -96,6 +98,8 @@ class ArenaWrappedDBIter : public Iterator {
     read_callback_ = read_callback;
     expose_blob_index_ = expose_blob_index;
   }
+
+  const Version* version() const { return db_iter_->version(); }
 
  private:
   DBIter* db_iter_ = nullptr;
