@@ -882,7 +882,7 @@ class Version {
 
   VersionSet* version_set() { return vset_; }
 
-  void GetColumnFamilyMetaData(ColumnFamilyMetaData* cf_meta);
+  void GetColumnFamilyMetaData(ColumnFamilyMetaData* cf_meta) const;
 
   uint64_t GetSstFilesSize();
 

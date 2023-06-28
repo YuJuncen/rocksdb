@@ -1443,7 +1443,7 @@ size_t Version::GetMemoryUsageByTableReaders() {
   return total_usage;
 }
 
-void Version::GetColumnFamilyMetaData(ColumnFamilyMetaData* cf_meta) {
+void Version::GetColumnFamilyMetaData(ColumnFamilyMetaData* cf_meta) const {
   assert(cf_meta);
   assert(cfd_);
 
